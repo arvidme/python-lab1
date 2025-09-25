@@ -1,55 +1,49 @@
 def tokenize(lines):
-
 	words = []
-
 	for line in lines:
-
 		start = 0
+		line = line.lower()
 		while start < len(line):
-
-			while line[start].isspace():
-				start = start + 1
-
 			end = start
 			if line[start].isalpha():
-				while line[end].isalpha():
+				while end < len(line) and line[end].isalpha():
 					end += 1
+				words.append(line[start:end])
+				start = end
 
 			elif line[start].isdigit():
-				while line[end].isdigit():
+				while end < len(line) and line[end].isdigit():
 					end += 1
+				words.append(line[start:end])
+				start = end
 
-			words.append(line[start:end])
-			start = end
-			start += 1
-	return words
-
-# def countWords(words, stopWords):
-# 	pass
-#
-# def printTopMost(frequencies, n):
-# 	pass
+			elif line[start].isspace():
+				start += 1
+			else:
+				words.append(line[start])
+				start += 1
+	return(words)
 
 
-# def tokenize(lines):
-#
-# 	words = []
-#
-# 	for line in lines:
-#
-# 		start = 0
-# 		while start < len(line):
-#
-# 			while line[start].isspace():
-# 				start = start + 1
-#
-# 			if(line[start].isalpha()):
-# 				print(f"{line[start]} is a letter")
-#
-# 			elif(line[start].isdigit()):
-# 				print(f"{line[start]} is a digit")
-#
-# 			else:
-# 				print(f"{line[start]} is a symbol")
-# 			start = start + 1
-# 	return words
+def countWords(words, stopWords):
+	count = {}
+	for word in words:
+		if word not in stopWords:
+			if word not in count:
+				count[word] = 1
+			else:
+				count[word] += 1
+
+	return count
+
+
+def printTopMost(frequencies,n):
+
+	sortedW = sorted(frequencies.items(), key=lambda x: (-x[1], x[0]))[:n]
+	count = 0
+	for word,freq in sortedW:
+
+		print(word.ljust(20) + str(freq).rjust(5))
+		count += 1
+		if count == n:
+			break
