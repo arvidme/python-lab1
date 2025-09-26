@@ -1,18 +1,20 @@
 import sys
 import wordfreq
+import urllib.request 
 
 def main():
-	stopwords = open(sys.argv[1])
-	data = open(sys.argv[2])
+	stopwords = open(sys.argv[1]).readlines()
+	response = urllib.request.urlopen(sys.argv[2])
+	lines = response.read().decode("utf8").splitlines()
+
 	count = int(sys.argv[3])
 
-	result = wordfreq.tokenize(data)
+	result = wordfreq.tokenize(lines)
 	words = wordfreq.countWords(result, stopwords)
 	wordfreq.printTopMost(words, count)
 
 	stopwords.close()
-	data.close()
-
+	response.close()
 
 if __name__ == "__main__":
 	main()

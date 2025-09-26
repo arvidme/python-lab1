@@ -27,7 +27,6 @@ def tokenize(lines):
 
 def countWords(words, stopWords):
 
-	stopWords = stopWords.readlines()
 	for i, stopword in enumerate(stopWords):
 		stopWords[i] = stopword.strip()
 
@@ -39,7 +38,6 @@ def countWords(words, stopWords):
 			else:
 				count[word] += 1
 	return count
-
 
 def printTopMost(frequencies,n):
 
